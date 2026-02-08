@@ -53,7 +53,7 @@ body {
     box-shadow: 0 4px 20px var(#00D9FF);
     position: relative;
     z-index: 100;
-    margin-top: 80px;
+    margin-top: 60px;
 }
 
 .header-content {
@@ -932,7 +932,7 @@ body {
                         <i class="fa-solid fa-robot"></i>
                     </div>
                     <h1 class="hero-title">Selamat Datang di ZainAI</h1>
-                    <p class="hero-subtitle">Asisten AI Cerdas Bertenaga Groq - Siap Membantu Anda</p>
+                    <p class="hero-subtitle">Asisten AI Cerdas Bertenaga Server VPS - Siap Membantu Anda</p>
                 </div>
 
                 <div class="features-section">
@@ -976,6 +976,9 @@ body {
         <!-- Input Area -->
         <div class="input-area">
             <div class="input-container">
+                <button class="attach-btn" onclick="openSettings()" title="Settings">
+                        <i class="fa-solid fa-gear"></i>
+                    </button>
                                     
                 <div class="input-wrapper">
                     <textarea 
@@ -1013,20 +1016,20 @@ body {
                 <div class="settings-group">
                     <label class="settings-label">
                         <i class="fa-solid fa-key"></i>
-                        API Key Groq
+                        Masukan Token
                     </label>
                     <div class="input-with-icon">
                         <input 
                             type="password" 
                             id="apiKeyInput" 
                             class="settings-input" 
-                            placeholder="Masukkan API Key Anda"
+                            placeholder="Masukkan Token Anda"
                         >
                         <button class="toggle-password" onclick="togglePassword('apiKeyInput')">
                             <i class="fa-solid fa-eye"></i>
                         </button>
                     </div>
-                    <small class="settings-hint">Dapatkan API key di <a href="https://console.groq.com" target="_blank">console.groq.com</a></small>
+                    <small class="settings-hint">Beli Token di Telegram Owner <a href="https://t.me/alwysprtyfx" target="_blank">@alwysprtyfx</a></small>
                 </div>
 
                 <div class="settings-group">
@@ -1509,13 +1512,13 @@ function saveSettings() {
     const tokens = parseInt(document.getElementById('maxTokensSelect').value);
     
     if (!keyInput) {
-        showNotification('API Key tidak boleh kosong!', 'error');
+        showNotification('Token tidak boleh kosong!', 'error');
         return;
     }
     
     // Validate API key format (basic check)
     if (!keyInput.startsWith('gsk_')) {
-        showNotification('Format API Key tidak valid. API Key Groq harus diawali dengan "gsk_"', 'error');
+        showNotification('Format API Key tidak valid.Token harus diawali dengan "gsk_"', 'error');
         return;
     }
     
