@@ -48,11 +48,12 @@ body {
 
 /* Header */
 .header {
-    background: linear-gradient(135deg, var(--primary-cyan) 0%, var(--primary-dark) 100%);
+    background: linear-gradient(135deg, var(#00D9FF) 0%, var(#00D9FF) 100%);
     padding: 16px 24px;
-    box-shadow: 0 4px 20px var(--shadow-color);
+    box-shadow: 0 4px 20px var(#00D9FF);
     position: relative;
     z-index: 100;
+    margin-top: 80px;
 }
 
 .header-content {
@@ -919,25 +920,7 @@ body {
         <!-- Header -->
         <header class="header">
             <div class="header-content">
-                <div class="logo">
-                    <div class="logo-icon">
-                        <i class="fa-solid fa-brain"></i>
-                    </div>
-                    <div class="logo-text">ZainAI</div>
-                    <span class="beta-badge">BETA</span>
-                </div>
-                <div class="header-actions">
-                    <button class="btn-icon" onclick="clearChat()" title="Clear Chat">
-                        <i class="fa-solid fa-trash-can"></i>
-                    </button>
-                    <button class="btn-icon" onclick="openSettings()" title="Settings">
-                        <i class="fa-solid fa-gear"></i>
-                    </button>
-                    <button class="btn-icon" onclick="showInfo()" title="Info">
-                        <i class="fa-solid fa-circle-info"></i>
-                    </button>
-                </div>
-            </div>
+
         </header>
 
         <!-- Chat Container -->
@@ -993,9 +976,7 @@ body {
         <!-- Input Area -->
         <div class="input-area">
             <div class="input-container">
-                <button class="attach-btn" title="Attach File (Coming Soon)">
-                    <i class="fa-solid fa-paperclip"></i>
-                </button>
+                                    
                 <div class="input-wrapper">
                     <textarea 
                         id="userInput" 
