@@ -1327,10 +1327,7 @@ document.addEventListener('DOMContentLoaded', () => {
     updateCharCounter();
     focusInput();
     
-    // Auto-open settings jika pertama kali buka (belum ada API key)
-    if (!apiKey) {
-        openSettings();
-    }
+    // Tidak auto-open settings - biarkan user yang buka sendiri
 });
 
 // Load saved settings
@@ -1454,8 +1451,10 @@ async function sendMessage() {
     
     // Check API key
     if (!apiKey) {
-        showNotification('Silakan masukkan Token di Settings terlebih dahulu!,Jika belum punya beli di Owner', 'error');
-        openSettings();
+        showNotification('Silakan masukkan Token API terlebih dahulu di Settings! 🔑', 'error');
+        setTimeout(() => {
+            openSettings();
+        }, 500);
         return;
     }
 
