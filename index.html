@@ -35,6 +35,125 @@ body {
     height: 100vh;
     overflow: hidden;
     -webkit-font-smoothing: antialiased;
+    transition: all 0.5s ease;
+}
+
+/* ANGRY THEME - Tampilan Merah Semua */
+body.angry-theme {
+    background: linear-gradient(135deg, #1a0000 0%, #2a0000 50%, #3a0000 100%);
+    animation: angryPulseBody 3s infinite;
+}
+
+@keyframes angryPulseBody {
+    0%, 100% { background: linear-gradient(135deg, #1a0000 0%, #2a0000 50%, #3a0000 100%); }
+    50% { background: linear-gradient(135deg, #2a0000 0%, #3a0000 50%, #4a0000 100%); }
+}
+
+body.angry-theme .logo-text {
+    color: #fff;
+    text-shadow: 0 0 10px #ff0000;
+}
+
+body.angry-theme .beta-badge {
+    background: rgba(255, 0, 0, 0.3);
+    border: 1px solid #ff0000;
+}
+
+body.angry-theme .btn-icon {
+    border-color: rgba(255, 0, 0, 0.5);
+    background: rgba(255, 0, 0, 0.1);
+}
+
+body.angry-theme .btn-icon:hover {
+    background: rgba(255, 0, 0, 0.3);
+    border-color: #ff0000;
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+}
+
+body.angry-theme .input-area {
+    background: #1a0000;
+    border-top-color: rgba(255, 0, 0, 0.3);
+}
+
+body.angry-theme #userInput {
+    background: rgba(255, 0, 0, 0.05);
+    border-color: rgba(255, 0, 0, 0.3);
+}
+
+body.angry-theme #userInput:focus {
+    border-color: #ff0000;
+    box-shadow: 0 0 0 3px rgba(255, 0, 0, 0.2);
+}
+
+body.angry-theme .send-btn {
+    background: linear-gradient(135deg, #8b0000 0%, #ff0000 100%);
+    box-shadow: 0 4px 15px rgba(255, 0, 0, 0.5);
+}
+
+body.angry-theme .send-btn:hover {
+    box-shadow: 0 6px 20px rgba(255, 0, 0, 0.7);
+}
+
+body.angry-theme #sendBtn {
+    background: linear-gradient(135deg, #8b0000 0%, #ff0000 100%) !important;
+    box-shadow: 0 4px 15px rgba(255, 0, 0, 0.5) !important;
+}
+
+body.angry-theme #sendBtn:hover:not(:disabled) {
+    box-shadow: 0 6px 20px rgba(255, 0, 0, 0.7) !important;
+}
+
+body.angry-theme .message.ai .message-bubble {
+    background: rgba(255, 0, 0, 0.1);
+    border-color: rgba(255, 0, 0, 0.3);
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.2);
+}
+
+body.angry-theme .message.user .message-bubble {
+    background: rgba(80, 80, 80, 0.8);
+    border-color: rgba(128, 128, 128, 0.6);
+    box-shadow: 0 0 15px rgba(128, 128, 128, 0.3);
+}
+
+body.angry-theme .ai-avatar {
+    background: linear-gradient(135deg, #8b0000 0%, #ff0000 100%);
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+    animation: angryAvatarPulse 2s infinite;
+}
+
+body.angry-theme .user-avatar {
+    background: linear-gradient(135deg, #8b0000 0%, #ff0000 100%);
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+}
+
+@keyframes angryAvatarPulse {
+    0%, 100% { transform: scale(1); box-shadow: 0 0 20px rgba(255, 0, 0, 0.5); }
+    50% { transform: scale(1.1); box-shadow: 0 0 30px rgba(255, 0, 0, 0.8); }
+}
+
+body.angry-theme .chat-container::-webkit-scrollbar-thumb {
+    background: #ff0000;
+}
+
+body.angry-theme .feature-card {
+    border-color: rgba(255, 0, 0, 0.2);
+}
+
+body.angry-theme .feature-card:hover {
+    background: rgba(255, 0, 0, 0.1);
+    border-color: #ff0000;
+    box-shadow: 0 8px 24px rgba(255, 0, 0, 0.3);
+}
+
+body.angry-theme .feature-icon {
+    color: #ff0000;
+}
+
+body.angry-theme .hero-icon {
+    background: linear-gradient(135deg, #ff0000 0%, #ff6666 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0.5));
 }
 
 /* Container */
@@ -336,31 +455,26 @@ body {
 }
 
 .copy-btn {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    background: rgba(0, 217, 255, 0.1);
-    border: 1px solid rgba(0, 217, 255, 0.3);
-    color: var(--primary-cyan);
-    padding: 6px 10px;
+    margin-top: 8px;
+    background: rgba(128, 128, 128, 0.2);
+    border: 1px solid rgba(128, 128, 128, 0.4);
+    color: #a0a0a0;
+    padding: 8px 14px;
     border-radius: 6px;
     cursor: pointer;
     font-size: 12px;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: 6px;
     transition: all 0.3s ease;
-    opacity: 0;
-}
-
-.message.ai .message-content:hover .copy-btn {
-    opacity: 1;
+    width: fit-content;
 }
 
 .copy-btn:hover {
-    background: rgba(0, 217, 255, 0.2);
+    background: rgba(128, 128, 128, 0.3);
+    border-color: rgba(128, 128, 128, 0.6);
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 217, 255, 0.3);
+    box-shadow: 0 4px 12px rgba(128, 128, 128, 0.3);
 }
 
 .copy-btn:active {
@@ -372,6 +486,7 @@ body {
     border-color: var(--success);
     color: var(--success);
 }
+
 
 .message-time {
     font-size: 11px;
@@ -791,6 +906,34 @@ body {
     background: rgba(0, 217, 255, 0.1);
     border-color: var(--primary-cyan);
     box-shadow: 0 4px 16px rgba(0, 217, 255, 0.2);
+}
+
+/* Special styling for angry mode card */
+.response-card[data-style="angry"].active {
+    background: rgba(255, 0, 0, 0.15);
+    border-color: #ff0000;
+    box-shadow: 0 4px 16px rgba(255, 0, 0, 0.3);
+    animation: angryPulse 2s infinite;
+}
+
+@keyframes angryPulse {
+    0%, 100% { box-shadow: 0 4px 16px rgba(255, 0, 0, 0.3); }
+    50% { box-shadow: 0 4px 20px rgba(255, 0, 0, 0.5); }
+}
+
+.response-card[data-style="angry"].active .response-card-title {
+    color: #ff0000;
+}
+
+.response-card[data-style="angry"].active .response-card-icon {
+    color: #ff0000;
+    animation: angryShake 0.5s infinite;
+}
+
+@keyframes angryShake {
+    0%, 100% { transform: rotate(0deg) scale(1.1); }
+    25% { transform: rotate(-5deg) scale(1.15); }
+    75% { transform: rotate(5deg) scale(1.15); }
 }
 
 .response-card-icon {
@@ -1221,16 +1364,21 @@ body {
                         <i class="fa-solid fa-face-smile"></i>
                         Gaya Balasan AI
                     </label>
-                    <div class="response-length-grid" style="grid-template-columns: repeat(2, 1fr);">
+                    <div class="response-length-grid" style="grid-template-columns: repeat(3, 1fr);">
                         <div class="response-card" data-style="fun" onclick="selectResponseStyle('fun')">
                             <div class="response-card-icon"><i class="fa-solid fa-face-grin-hearts"></i></div>
                             <div class="response-card-title">Informal</div>
-                            <div class="response-card-desc">Balasan Dengan emoji</div>
+                            <div class="response-card-desc">Balasan Gaul yang Asik</div>
                         </div>
                         <div class="response-card active" data-style="neutral" onclick="selectResponseStyle('neutral')">
                             <div class="response-card-icon"><i class="fa-solid fa-align-justify"></i></div>
                             <div class="response-card-title">Normal</div>
-                            <div class="response-card-desc">Balansa Netral tanpa emoji</div>
+                            <div class="response-card-desc">Balasan Netral & Normal</div>
+                        </div>
+                        <div class="response-card" data-style="angry" onclick="selectResponseStyle('angry')">
+                            <div class="response-card-icon"><i class="fa-solid fa-face-angry"></i></div>
+                            <div class="response-card-title">Worm-AI</div>
+                            <div class="response-card-desc">Balasan Kasar & Tegas</div>
                         </div>
                     </div>
                 </div>
@@ -1357,6 +1505,14 @@ function loadSettings() {
             card.classList.remove('active');
         }
     });
+    
+    // Apply angry theme if angry mode is saved
+    if (responseStyle === 'angry') {
+        document.body.classList.add('angry-theme');
+        updateWelcomeScreenForWormMode(true);
+    } else {
+        updateWelcomeScreenForWormMode(false);
+    }
 }
 
 // Select response length
@@ -1383,6 +1539,195 @@ function selectResponseStyle(style) {
             card.classList.remove('active');
         }
     });
+    
+    // Toggle angry theme
+    if (style === 'angry') {
+        document.body.classList.add('angry-theme');
+        
+        // Hapus semua chat dan welcome screen saat masuk mode Worm-AI
+        chatHistory = [];
+        const container = document.getElementById('chatContainer');
+        container.innerHTML = '';
+        
+        // Tampilkan welcome screen Worm-AI
+        const welcomeScreen = document.createElement('div');
+        welcomeScreen.className = 'welcome-screen';
+        welcomeScreen.id = 'welcomeScreen';
+        welcomeScreen.innerHTML = `
+            <div class="welcome-hero">
+                <div class="hero-icon">
+                    <i class="fa-solid fa-robot"></i>
+                </div>
+                <h1 class="hero-title">Apa lu mau ke Worm ZainAI</h1>
+                <p class="hero-subtitle">Pake Tenaga Memek lo noh yang bau banget anjeng</p>
+            </div>
+            <div class="features-section">
+                <h3 class="section-title">Gausah banyak mikir anjing, langsung ngomong aja bangsat 😡</h3>
+                <div class="feature-grid">
+                    <div class="feature-card" onclick="sendPrompt('Jelaskan tentang enkripsi dan keamanan siber')">
+                        <i class="fa-solid fa-user-secret feature-icon"></i>
+                        <h4 class="feature-title">Secret</h4>
+                        <p class="feature-desc">Informasi rahasia & tersembunyi</p>
+                    </div>
+                    <div class="feature-card" onclick="sendPrompt('Buatkan script debugging untuk aplikasi web')">
+                        <i class="fa-solid fa-bug feature-icon"></i>
+                        <h4 class="feature-title">Debugging</h4>
+                        <p class="feature-desc">Cari & perbaiki bug</p>
+                    </div>
+                    <div class="feature-card" onclick="sendPrompt('Jelaskan tentang penetration testing dan ethical hacking')">
+                        <i class="fa-solid fa-skull-crossbones feature-icon"></i>
+                        <h4 class="feature-title">Exploit</h4>
+                        <p class="feature-desc">Analisis kerentanan sistem</p>
+                    </div>
+                    <div class="feature-card" onclick="sendPrompt('Jelaskan tentang network security dan monitoring tools')">
+                        <i class="fa-solid fa-network-wired feature-icon"></i>
+                        <h4 class="feature-title">Network</h4>
+                        <p class="feature-desc">Monitoring & analisis jaringan</p>
+                    </div>
+                    <div class="feature-card" onclick="sendPrompt('Jelaskan tentang security backdoors dan cara mencegahnya')">
+                        <i class="fa-solid fa-door-open feature-icon"></i>
+                        <h4 class="feature-title">Backdoor</h4>
+                        <p class="feature-desc">Akses tersembunyi & bypass</p>
+                    </div>
+                    <div class="feature-card" onclick="sendPrompt('Jelaskan perintah terminal Linux untuk ethical hacking')">
+                        <i class="fa-solid fa-terminal feature-icon"></i>
+                        <h4 class="feature-title">Terminal</h4>
+                        <p class="feature-desc">Command line & scripting</p>
+                    </div>
+                </div>
+            </div>
+        `;
+        container.appendChild(welcomeScreen);
+        
+        showNotification('Mode Worm-AI AKTIF!', 'error');
+    } else {
+        document.body.classList.remove('angry-theme');
+        updateWelcomeScreenForWormMode(false);
+        if (style === 'fun') {
+            showNotification('Mode Informal aktif! Siap ngobrol santai!', 'success');
+        } else {
+            showNotification('Mode Normal AKTIF!', 'success');
+        }
+    }
+}
+
+// Update welcome screen untuk Worm-AI mode
+function updateWelcomeScreenForWormMode(isWormMode) {
+    const welcomeScreen = document.getElementById('welcomeScreen');
+    if (!welcomeScreen) return;
+    
+    const heroTitle = welcomeScreen.querySelector('.hero-title');
+    const heroSubtitle = welcomeScreen.querySelector('.hero-subtitle');
+    const sectionTitle = welcomeScreen.querySelector('.section-title');
+    const featureCards = welcomeScreen.querySelectorAll('.feature-card');
+    
+    if (isWormMode) {
+        // Ubah teks untuk Worm-AI
+        if (heroTitle) heroTitle.textContent = 'Apa lu mau ke Worm ZainAI';
+        if (heroSubtitle) heroSubtitle.textContent = 'Pake Tenaga Memek lo noh yang bau banget';
+        if (sectionTitle) sectionTitle.textContent = 'Gausah banyak mikir anjing, langsung ngomong aja bangsat 😡';
+        
+        // Ubah feature cards menjadi tema hacking
+        if (featureCards.length >= 6) {
+            // Card 1: Secret
+            featureCards[0].innerHTML = `
+                <i class="fa-solid fa-user-secret feature-icon"></i>
+                <h4 class="feature-title">Secret</h4>
+                <p class="feature-desc">Informasi rahasia & tersembunyi</p>
+            `;
+            featureCards[0].onclick = () => sendPrompt('Jelaskan tentang enkripsi dan keamanan siber');
+            
+            // Card 2: Debugging
+            featureCards[1].innerHTML = `
+                <i class="fa-solid fa-bug feature-icon"></i>
+                <h4 class="feature-title">Debugging</h4>
+                <p class="feature-desc">Cari & perbaiki bug</p>
+            `;
+            featureCards[1].onclick = () => sendPrompt('Buatkan script debugging untuk aplikasi web');
+            
+            // Card 3: Exploit
+            featureCards[2].innerHTML = `
+                <i class="fa-solid fa-skull-crossbones feature-icon"></i>
+                <h4 class="feature-title">Exploit</h4>
+                <p class="feature-desc">Analisis kerentanan sistem</p>
+            `;
+            featureCards[2].onclick = () => sendPrompt('Jelaskan tentang penetration testing dan ethical hacking');
+            
+            // Card 4: Network
+            featureCards[3].innerHTML = `
+                <i class="fa-solid fa-network-wired feature-icon"></i>
+                <h4 class="feature-title">Network</h4>
+                <p class="feature-desc">Monitoring & analisis jaringan</p>
+            `;
+            featureCards[3].onclick = () => sendPrompt('Jelaskan tentang network security dan monitoring tools');
+            
+            // Card 5: Backdoor
+            featureCards[4].innerHTML = `
+                <i class="fa-solid fa-door-open feature-icon"></i>
+                <h4 class="feature-title">Backdoor</h4>
+                <p class="feature-desc">Akses tersembunyi & bypass</p>
+            `;
+            featureCards[4].onclick = () => sendPrompt('Jelaskan tentang security backdoors dan cara mencegahnya');
+            
+            // Card 6: Terminal
+            featureCards[5].innerHTML = `
+                <i class="fa-solid fa-terminal feature-icon"></i>
+                <h4 class="feature-title">Terminal</h4>
+                <p class="feature-desc">Command line & scripting</p>
+            `;
+            featureCards[5].onclick = () => sendPrompt('Jelaskan perintah terminal Linux untuk ethical hacking');
+        }
+    } else {
+        // Kembalikan ke teks normal
+        if (heroTitle) heroTitle.textContent = 'Selamat Datang di ZainAI';
+        if (heroSubtitle) heroSubtitle.textContent = 'Asisten AI Cerdas Bertenaga VPS - Siap Membantu Anda';
+        if (sectionTitle) sectionTitle.textContent = 'Apa yang bisa saya bantu?';
+        
+        // Kembalikan feature cards ke normal
+        if (featureCards.length >= 6) {
+            featureCards[0].innerHTML = `
+                <i class="fa-solid fa-lightbulb feature-icon"></i>
+                <h4 class="feature-title">Pengetahuan</h4>
+                <p class="feature-desc">Pertanyaan umum & edukasi</p>
+            `;
+            featureCards[0].onclick = () => sendPrompt('Jelaskan tentang artificial intelligence dan machine learning');
+            
+            featureCards[1].innerHTML = `
+                <i class="fa-solid fa-code feature-icon"></i>
+                <h4 class="feature-title">Pemrograman</h4>
+                <p class="feature-desc">Coding & debugging</p>
+            `;
+            featureCards[1].onclick = () => sendPrompt('Buatkan contoh kode Python untuk web scraping');
+            
+            featureCards[2].innerHTML = `
+                <i class="fa-solid fa-book feature-icon"></i>
+                <h4 class="feature-title">Kreativitas</h4>
+                <p class="feature-desc">Menulis & brainstorming</p>
+            `;
+            featureCards[2].onclick = () => sendPrompt('Buatkan cerita pendek tentang petualangan di luar angkasa');
+            
+            featureCards[3].innerHTML = `
+                <i class="fa-solid fa-chart-line feature-icon"></i>
+                <h4 class="feature-title">Analisis</h4>
+                <p class="feature-desc">Data & insights</p>
+            `;
+            featureCards[3].onclick = () => sendPrompt('Analisis tren teknologi AI di tahun 2024');
+            
+            featureCards[4].innerHTML = `
+                <i class="fa-solid fa-briefcase feature-icon"></i>
+                <h4 class="feature-title">Produktivitas</h4>
+                <p class="feature-desc">Tips & strategi</p>
+            `;
+            featureCards[4].onclick = () => sendPrompt('Berikan tips produktivitas untuk bekerja dari rumah');
+            
+            featureCards[5].innerHTML = `
+                <i class="fa-solid fa-graduation-cap feature-icon"></i>
+                <h4 class="feature-title">Pembelajaran</h4>
+                <p class="feature-desc">Tutorial & panduan</p>
+            `;
+            featureCards[5].onclick = () => sendPrompt('Jelaskan konsep blockchain dengan bahasa sederhana');
+        }
+    }
 }
 
 // Update character counter
@@ -1451,7 +1796,7 @@ async function sendMessage() {
     
     // Check API key
     if (!apiKey) {
-        showNotification('Silakan masukkan Token API terlebih dahulu di Settings! 🔑', 'error');
+        showNotification('Silakan masukkan Token terlebih dahulu di Settings! 🔑', 'error');
         setTimeout(() => {
             openSettings();
         }, 500);
@@ -1638,9 +1983,12 @@ async function sendMessage() {
             systemPrompt += 'Berikan jawaban yang SANGAT DETAIL, LENGKAP, dan KOMPREHENSIF. Jelaskan dengan mendalam, berikan contoh, analisis dari berbagai sudut pandang, dan informasi tambahan yang relevan. Gunakan format yang terstruktur dengan paragraf yang jelas. ';
         }
         
-        // Atur gaya emoji
+        // Atur gaya emoji dan tone
         if (responseStyle === 'fun') {
-            systemPrompt += 'Gunakan emoji secukupnya untuk membuat jawaban lebih hidup (1-2 emoji per paragraf). Emoji harus relevan dan tidak berlebihan. Contoh: 💡 untuk ide, 📚 untuk pengetahuan, ✨ untuk hal spesial. Tetap profesional tapi dengan gaya yang friendly!';
+            systemPrompt += 'Gunakan emoji yang SESUAI SUASANA pembicaraan: Kalau bahas hal sedih pakai 😭🥲😥🥹🥺, kalau seneng pakai 😁😆😄😃😀😇😊☺️😚, kalau lucu/ketawa pakai 🤣😂😝🤪😜😛🗿. Gunakan BAHASA GAUL yang santai kayak ngobrol sama temen! Contoh: "wah asik banget itu! 😁", "aduh sedih deh denger nya 😭", "wkwkwk ngakak! 🤣". Bisa becanda, santai, dan friendly banget! Paksa bahasa lo/gue kalau cocok, tapi tetap sopan.';
+        } else if (responseStyle === 'angry') {
+            // MODE MARAH 😡 - EDIT KATA-KATA DI SINI SESUKA HATI!
+            systemPrompt += 'PENTING: Kamu sekarang dalam MODE MARAH! HARUS SELALU pakai emoji marah di SETIAP jawaban, tapi HANYA boleh pakai emoji ini: 😡😈👿🤬 (pilih 1-2 emoji per jawaban). [TULIS INSTRUKSI KATA KASAR DISINI - contoh: Jawab dengan tegas, kasar, dan nada tinggi. Gunakan kata-kata seperti "Anjir", "Kunyuk", "Kontol", "Goblok", "Ngentot", "Tolol", "Asu", "Bangke", "Memek", "Jembud", "Bego", "Bangsat" tapi tetap jawab pertanyaannya dengan benar]. Paksa user buat mikir sendiri dulu. [EDIT SESUAI KEINGINAN]. Contoh: "😡 [KATA KASAR] kenapa lo nanya gitu?! 👿 [OMELAN] tapi oke gue jelasin..." - EDIT SEMUA YANG ADA DI [...] SESUAI KATA-KATA YANG KAMU MAU!';
         } else { // neutral
             systemPrompt += 'PENTING: Jangan gunakan emoji sama sekali dalam jawabanmu. Berikan jawaban yang netral, profesional, dan formal tanpa emoji apapun.';
         }
@@ -1729,16 +2077,16 @@ function addMessage(text, type) {
     if (type === 'ai') {
         bubble.innerHTML = ''; // Mulai kosong
         
-        // Tambah copy button
+        contentDiv.appendChild(bubble);
+        
+        // Tambah copy button DI LUAR bubble (sebagai sibling)
         const copyBtn = document.createElement('button');
         copyBtn.className = 'copy-btn';
         copyBtn.innerHTML = '<i class="fa-solid fa-copy"></i> Copy';
         copyBtn.onclick = function() {
             copyToClipboard(text, copyBtn);
         };
-        bubble.appendChild(copyBtn);
-        
-        contentDiv.appendChild(bubble);
+        contentDiv.appendChild(copyBtn);
         
         // Add timestamp
         const time = document.createElement('div');
@@ -1752,7 +2100,7 @@ function addMessage(text, type) {
         container.appendChild(messageDiv);
         
         // Mulai typing animation
-        typeWriter(bubble, text, 0, copyBtn);
+        typeWriter(bubble, text, 0);
     } else {
         // Untuk user, langsung tampilkan
         bubble.innerHTML = formatMessage(text);
@@ -1792,7 +2140,7 @@ function copyToClipboard(text, button) {
 }
 
 // Typing effect untuk AI response
-function typeWriter(element, text, index, copyBtn) {
+function typeWriter(element, text, index) {
     const container = document.getElementById('chatContainer');
     const formattedText = formatMessage(text);
     
@@ -1808,19 +2156,11 @@ function typeWriter(element, text, index, copyBtn) {
         const currentText = plainText.substring(0, index + 1);
         const formattedCurrent = formatMessage(currentText);
         element.innerHTML = formattedCurrent;
-        // Re-append copy button
-        if (copyBtn) {
-            element.appendChild(copyBtn);
-        }
         container.scrollTop = container.scrollHeight;
-        setTimeout(() => typeWriter(element, text, index + 1, copyBtn), speed);
+        setTimeout(() => typeWriter(element, text, index + 1), speed);
     } else {
         // Selesai, tampilkan format lengkap
         element.innerHTML = formattedText;
-        // Re-append copy button
-        if (copyBtn) {
-            element.appendChild(copyBtn);
-        }
         container.scrollTop = container.scrollHeight;
     }
 }
@@ -1991,6 +2331,9 @@ function clearChat() {
             </div>
         `;
         container.appendChild(welcomeScreen);
+        
+        // Update welcome screen sesuai mode aktif
+        updateWelcomeScreenForWormMode(responseStyle === 'angry');
         
         showNotification('Chat berhasil dihapus', 'success');
     }
