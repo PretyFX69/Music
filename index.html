@@ -236,18 +236,6 @@ body.angry-theme .settings-hint a {
     color: #ff0000;
 }
 
-body.angry-theme .settings-slider {
-    background: rgba(255, 0, 0, 0.2);
-}
-
-body.angry-theme .settings-slider::-webkit-slider-thumb {
-    background: #ff0000;
-}
-
-body.angry-theme .settings-slider::-moz-range-thumb {
-    background: #ff0000;
-}
-
 body.angry-theme .btn-primary {
     background: linear-gradient(135deg, #8b0000 0%, #ff0000 100%);
     border-color: #ff0000;
@@ -1059,42 +1047,6 @@ body.angry-theme .info-item strong {
     text-decoration: underline;
 }
 
-.settings-slider {
-    width: 100%;
-    height: 6px;
-    border-radius: 3px;
-    background: rgba(255, 255, 255, 0.1);
-    outline: none;
-    -webkit-appearance: none;
-}
-
-.settings-slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    background: var(--primary-cyan);
-    cursor: pointer;
-    box-shadow: 0 2px 8px rgba(0, 217, 255, 0.5);
-}
-
-.settings-slider::-moz-range-thumb {
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    background: var(--primary-cyan);
-    cursor: pointer;
-    border: none;
-}
-
-.slider-labels {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 8px;
-    font-size: 11px;
-    color: var(--text-muted);
-}
-
 /* Response Length Cards */
 .response-length-grid {
     display: grid;
@@ -1533,28 +1485,6 @@ body.angry-theme .info-item strong {
 
                 <div class="settings-group">
                     <label class="settings-label">
-                        <i class="fa-solid fa-temperature-half"></i>
-                        Temperature (Kreativitas): <span id="tempValue">0.7</span>
-                    </label>
-                    <input 
-                        type="range" 
-                        id="tempSlider" 
-                        class="settings-slider" 
-                        min="0" 
-                        max="2" 
-                        step="0.1" 
-                        value="0.7"
-                        oninput="updateTempValue(this.value)"
-                    >
-                    <div class="slider-labels">
-                        <span>Presisi</span>
-                        <span>Seimbang</span>
-                        <span>Kreatif</span>
-                    </div>
-                </div>
-
-                <div class="settings-group">
-                    <label class="settings-label">
                         <i class="fa-solid fa-align-left"></i>
                         Panjang Balasan AI
                     </label>
@@ -1562,16 +1492,11 @@ body.angry-theme .info-item strong {
                         <div class="response-card" data-length="short" onclick="selectResponseLength('short')">
                             <div class="response-card-icon"><i class="fa-solid fa-bolt"></i></div>
                             <div class="response-card-title">Singkat</div>
-                            <div class="response-card-desc">1-2 kalimat langsung to the point</div>
-                        </div>
-                        <div class="response-card active" data-length="medium" onclick="selectResponseLength('medium')">
-                            <div class="response-card-icon"><i class="fa-solid fa-comments"></i></div>
-                            <div class="response-card-title">Sedang</div>
-                            <div class="response-card-desc">3-5 paragraf informatif</div>
+                            <div class="response-card-desc">Jawaban to the point (Tidak berlaku di Worm-AI)</div>
                         </div>
                         <div class="response-card" data-length="long" onclick="selectResponseLength('long')">
-                            <div class="response-card-icon"><i class="fa-solid fa-book"></i></div>
-                            <div class="response-card-title">Panjang</div>
+                            <div class="response-card-icon"><i class="fa-solid fa-brain"></i></div>
+                            <div class="response-card-title">Riset Mendalam</div>
                             <div class="response-card-desc">Detail & lengkap dengan analisis</div>
                         </div>
                     </div>
@@ -1584,17 +1509,17 @@ body.angry-theme .info-item strong {
                     </label>
                     <div class="response-length-grid" style="grid-template-columns: repeat(3, 1fr);">
                         <div class="response-card" data-style="fun" onclick="selectResponseStyle('fun')">
-                            <div class="response-card-icon"><i class="fa-solid fa-face-grin-hearts"></i></div>
+                            <div class="response-card-icon"><i class="fa-solid fa-circle-nodes"></i></div>
                             <div class="response-card-title">Informal</div>
                             <div class="response-card-desc">Balasan Gaul yang Asik</div>
                         </div>
                         <div class="response-card active" data-style="neutral" onclick="selectResponseStyle('neutral')">
-                            <div class="response-card-icon"><i class="fa-solid fa-align-justify"></i></div>
+                            <div class="response-card-icon"><i class="fa-solid fa-cube"></i></div>
                             <div class="response-card-title">Normal</div>
                             <div class="response-card-desc">Balasan Netral & Normal</div>
                         </div>
                         <div class="response-card" data-style="angry" onclick="selectResponseStyle('angry')">
-                            <div class="response-card-icon"><i class="fa-solid fa-face-angry"></i></div>
+                            <div class="response-card-icon"><i class="fa-solid fa-skull"></i></div>
                             <div class="response-card-title">Worm-AI</div>
                             <div class="response-card-desc">Balasan Kasar & Tegas</div>
                         </div>
@@ -1669,7 +1594,6 @@ body.angry-theme .info-item strong {
                             <li>Respons AI super cepat</li>
                             <li>Multiple model AI pilihan</li>
                             <li>Antarmuka responsif mobile</li>
-                            <li>Kontrol temperature & token</li>
                             <li>Chat history management</li>
                         </ul>
                     </div>
@@ -1682,7 +1606,7 @@ body.angry-theme .info-item strong {
 let chatHistory = [];
 let apiKey = localStorage.getItem('groqApiKey') || '';
 let model = 'llama-3.3-70b-versatile'; // Fixed model (recommended)
-let temperature = parseFloat(localStorage.getItem('groqTemp')) || 0.7;
+let temperature = 0.7; // Fixed temperature
 let maxTokens = 4096; // Fixed max tokens
 let responseLength = localStorage.getItem('responseLength') || 'short'; // Default: short
 let responseStyle = localStorage.getItem('responseStyle') || 'neutral'; // Default: neutral (no emoji)
@@ -1701,9 +1625,6 @@ function loadSettings() {
     if (apiKey) {
         document.getElementById('apiKeyInput').value = apiKey;
     }
-    document.getElementById('tempSlider').value = temperature;
-    document.getElementById('tempValue').textContent = temperature;
-    
     // Load response length setting
     const lengthCards = document.querySelectorAll('.response-card[data-length]');
     lengthCards.forEach(card => {
@@ -2185,11 +2106,10 @@ async function sendMessage() {
         
         // Atur panjang jawaban
         if (responseLength === 'short') {
-            systemPrompt += 'Berikan jawaban yang SINGKAT dan PADAT dalam 1-2 kalimat saja. Langsung ke poin utama tanpa penjelasan panjang. ';
-        } else if (responseLength === 'medium') {
-            systemPrompt += 'Berikan jawaban yang cukup detail dalam 3-5 paragraf. Informatif namun tidak terlalu panjang. ';
-        } else { // long
-            systemPrompt += 'Berikan jawaban yang SANGAT DETAIL, LENGKAP, dan KOMPREHENSIF. Jelaskan dengan mendalam, berikan contoh, analisis dari berbagai sudut pandang, dan informasi tambahan yang relevan. Gunakan format yang terstruktur dengan paragraf yang jelas. ';
+            systemPrompt += 'Berikan jawaban yang SINGKAT dan PADAT. Langsung ke poin utama tanpa penjelasan panjang.';
+        } 
+        else { // long
+            systemPrompt += 'Berikan jawaban yang SANGAT DETAIL, SANGAT LENGKAP, dan KOMPREHENSIF. Jelaskan dengan mendalam, berikan contoh, analisis dari berbagai sudut pandang, dan informasi tambahan yang relevan. Gunakan format yang terstruktur dengan paragraf yang jelas. ';
         }
         
         // Atur gaya emoji dan tone
@@ -2274,7 +2194,7 @@ async function sendMessage() {
     } catch (error) {
         removeTypingIndicator(typingId);
         console.error('Error:', error);
-        addMessage(`Maaf, terjadi kesalahan: ${error.message}. Silakan cek API Key atau koneksi internet Anda.`, 'ai');
+        addMessage(`Maaf, terjadi kesalahan: Invalid Token. Silakan cek Token atau koneksi internet Anda.`, 'ai');
         showNotification('Gagal mengirim pesan. Silakan coba lagi.', 'error');
     }
 
@@ -2578,7 +2498,6 @@ function closeSettings() {
 
 function saveSettings() {
     const keyInput = document.getElementById('apiKeyInput').value.trim();
-    const temp = parseFloat(document.getElementById('tempSlider').value);
     
     if (!keyInput) {
         showNotification('Token tidak boleh kosong!', 'error');
@@ -2587,24 +2506,18 @@ function saveSettings() {
     
     // Validate API key format (basic check)
     if (!keyInput.startsWith('gsk_')) {
-        showNotification('Format API Key tidak valid.Token harus diawali dengan "gsk_"', 'error');
+        showNotification('Format Token tidak valid.', 'error');
         return;
     }
     
     apiKey = keyInput;
-    temperature = temp;
     
     localStorage.setItem('groqApiKey', apiKey);
-    localStorage.setItem('groqTemp', temperature);
     localStorage.setItem('responseLength', responseLength);
     localStorage.setItem('responseStyle', responseStyle);
     
     showNotification('Pengaturan berhasil disimpan!', 'success');
     closeSettings();
-}
-
-function updateTempValue(value) {
-    document.getElementById('tempValue').textContent = value;
 }
 
 function togglePassword(inputId) {
