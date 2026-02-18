@@ -647,7 +647,8 @@ body.angry-theme .info-item strong {
 }
 
 .message.user .message-bubble {
-    background: linear-gradient(135deg, var(--primary-cyan) 0%, var(--primary-dark) 100%);
+    background: linear-gradient(135deg, rgba(0, 180, 210, 0.55) 0%, rgba(0, 100, 160, 0.65) 100%);
+    border: 1px solid rgba(0, 217, 255, 0.25);
     color: var(--text-primary);
     border-bottom-right-radius: 4px;
 }
@@ -1485,8 +1486,7 @@ body.angry-theme .info-item strong {
 
                 <div class="settings-group">
                     <label class="settings-label">
-                        <i class="fa-solid fa-align-left"></i>
-                        Panjang Balasan AI
+                        <i class="fa-solid fa-puzzle-piece"></i>Pola Berpikir AI
                     </label>
                     <div class="response-length-grid">
                         <div class="response-card" data-length="short" onclick="selectResponseLength('short')">
@@ -1504,8 +1504,7 @@ body.angry-theme .info-item strong {
 
                 <div class="settings-group">
                     <label class="settings-label">
-                        <i class="fa-solid fa-face-smile"></i>
-                        Gaya Balasan AI
+                        <i class="fa-solid fa-comments"></i>Gaya Balasan
                     </label>
                     <div class="response-length-grid" style="grid-template-columns: repeat(3, 1fr);">
                         <div class="response-card" data-style="fun" onclick="selectResponseStyle('fun')">
@@ -1603,6 +1602,7 @@ body.angry-theme .info-item strong {
     </div>
     <script>
     // Global variables
+let chatHistories = { worm: [], normal: [] };
 let chatHistory = [];
 let apiKey = localStorage.getItem('groqApiKey') || '';
 let model = 'llama-3.3-70b-versatile'; // Fixed model (recommended)
@@ -1610,9 +1610,84 @@ let temperature = 0.7; // Fixed temperature
 let maxTokens = 4096; // Fixed max tokens
 let responseLength = localStorage.getItem('responseLength') || 'short'; // Default: short
 let responseStyle = localStorage.getItem('responseStyle') || 'neutral'; // Default: neutral (no emoji)
+let isGenerating = false; // Flag saat AI sedang balas
+
+function getWelcomeScreenHTML() {
+    return `
+        <div class="welcome-hero">
+            <div class="hero-icon"><i class="fa-solid fa-robot"></i></div>
+            <h1 class="hero-title">Selamat Datang di ZainAI</h1>
+            <p class="hero-subtitle">Asisten AI Cerdas Bertenaga VPS - Siap Membantu Anda</p>
+        </div>
+        <div class="features-section">
+            <h3 class="section-title">Apa yang bisa saya bantu?</h3>
+            <div class="feature-grid">
+                <div class="feature-card" onclick="sendPrompt('Jelaskan tentang artificial intelligence dan machine learning')"><i class="fa-solid fa-lightbulb feature-icon"></i><h4 class="feature-title">Pengetahuan</h4><p class="feature-desc">Pertanyaan umum & edukasi</p></div>
+                <div class="feature-card" onclick="sendPrompt('Buatkan contoh kode Python untuk web scraping')"><i class="fa-solid fa-code feature-icon"></i><h4 class="feature-title">Pemrograman</h4><p class="feature-desc">Coding & debugging</p></div>
+                <div class="feature-card" onclick="sendPrompt('Buatkan cerita pendek tentang petualangan di luar angkasa')"><i class="fa-solid fa-book feature-icon"></i><h4 class="feature-title">Kreativitas</h4><p class="feature-desc">Menulis & brainstorming</p></div>
+                <div class="feature-card" onclick="sendPrompt('Analisis tren teknologi AI di tahun 2024')"><i class="fa-solid fa-chart-line feature-icon"></i><h4 class="feature-title">Analisis</h4><p class="feature-desc">Data & insights</p></div>
+                <div class="feature-card" onclick="sendPrompt('Berikan tips produktivitas untuk bekerja dari rumah')"><i class="fa-solid fa-briefcase feature-icon"></i><h4 class="feature-title">Produktivitas</h4><p class="feature-desc">Tips & strategi</p></div>
+                <div class="feature-card" onclick="sendPrompt('Jelaskan konsep blockchain dengan bahasa sederhana')"><i class="fa-solid fa-graduation-cap feature-icon"></i><h4 class="feature-title">Pembelajaran</h4><p class="feature-desc">Tutorial & panduan</p></div>
+            </div>
+        </div>`;
+}
+
+function addMessageInstant(text, type) {
+    const container = document.getElementById('chatContainer');
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `message ${type}`;
+    if (type === 'ai') {
+        const av = document.createElement('div');
+        av.className = 'avatar ai-avatar';
+        const ic = document.createElement('i');
+        ic.className = 'fa-solid fa-robot';
+        av.appendChild(ic);
+        messageDiv.appendChild(av);
+    }
+    const contentDiv = document.createElement('div');
+    contentDiv.className = 'message-content';
+    const bubble = document.createElement('div');
+    bubble.className = 'message-bubble';
+    bubble.innerHTML = formatMessage(text);
+    contentDiv.appendChild(bubble);
+    if (type === 'ai') {
+        const copyBtn = document.createElement('button');
+        copyBtn.className = 'copy-btn';
+        copyBtn.innerHTML = '<i class="fa-solid fa-copy"></i> Copy';
+        copyBtn.onclick = function() { copyToClipboard(text, copyBtn); };
+        contentDiv.appendChild(copyBtn);
+    }
+    const time = document.createElement('div');
+    time.className = 'message-time';
+    time.textContent = '✓';
+    contentDiv.appendChild(time);
+    messageDiv.appendChild(contentDiv);
+    container.appendChild(messageDiv);
+    container.scrollTop = container.scrollHeight;
+}
+
+function renderChatFromHistory(history) {
+    const container = document.getElementById('chatContainer');
+    container.innerHTML = '';
+    if (history.length === 0) {
+        const ws = document.createElement('div');
+        ws.className = 'welcome-screen';
+        ws.id = 'welcomeScreen';
+        ws.innerHTML = getWelcomeScreenHTML();
+        container.appendChild(ws);
+        updateWelcomeScreenForWormMode(responseStyle === 'angry');
+        return;
+    }
+    for (let i = 0; i < history.length; i += 2) {
+        if (history[i]) addMessageInstant(history[i].content, 'user');
+        if (history[i+1]) addMessageInstant(history[i+1].content, 'ai');
+    }
+}
 
 // Initialize on page load
 document.addEventListener('DOMContentLoaded', () => {
+    // Init history pointer sesuai mode tersimpan
+    chatHistory = responseStyle === 'angry' ? chatHistories.worm : chatHistories.normal;
     loadSettings();
     updateCharCounter();
     focusInput();
@@ -1721,7 +1796,9 @@ function selectResponseStyle(style) {
         setTimeout(() => {
             document.body.classList.add('angry-theme');
             
-            // Update welcome screen jika ada (tidak menghapus chat history)
+            // Switch ke worm history
+            chatHistory = chatHistories.worm;
+            renderChatFromHistory(chatHistory);
             updateWelcomeScreenForWormMode(true);
             
             // Hapus loading overlay
@@ -1732,6 +1809,10 @@ function selectResponseStyle(style) {
         }, 1500);
     } else {
         document.body.classList.remove('angry-theme');
+        
+        // Switch ke normal/informal history (shared)
+        chatHistory = chatHistories.normal;
+        renderChatFromHistory(chatHistory);
         updateWelcomeScreenForWormMode(false);
         if (style === 'fun') {
             showNotification('Mode Informal aktif! Siap ngobrol santai!', 'success');
@@ -1888,7 +1969,7 @@ function autoResize(element) {
 function updateSendButton() {
     const input = document.getElementById('userInput');
     const btn = document.getElementById('sendBtn');
-    btn.disabled = !input.value.trim();
+    btn.disabled = !input.value.trim() || isGenerating;
 }
 
 // Focus on input
@@ -2099,6 +2180,8 @@ async function sendMessage() {
 
     // Add typing indicator
     const typingId = addTypingIndicator();
+    isGenerating = true;
+    updateSendButton();
 
     try {
         // Buat system prompt berdasarkan responseLength dan responseStyle
@@ -2188,7 +2271,9 @@ async function sendMessage() {
 
         // Keep only last 20 messages (10 exchanges)
         if (chatHistory.length > 20) {
-            chatHistory = chatHistory.slice(-20);
+            const trimmed = chatHistory.slice(-20);
+            chatHistory.length = 0;
+            trimmed.forEach(m => chatHistory.push(m));
         }
 
     } catch (error) {
@@ -2196,6 +2281,8 @@ async function sendMessage() {
         console.error('Error:', error);
         addMessage(`Maaf, terjadi kesalahan: Invalid Token. Silakan cek Token atau koneksi internet Anda.`, 'ai');
         showNotification('Gagal mengirim pesan. Silakan coba lagi.', 'error');
+        isGenerating = false;
+        updateSendButton();
     }
 
     focusInput();
@@ -2260,8 +2347,7 @@ function addMessage(text, type) {
         time.textContent = getCurrentTime();
         contentDiv.appendChild(time);
         
-        // Append elements
-        messageDiv.appendChild(avatar);
+        // Append elements (user tanpa avatar)
         messageDiv.appendChild(contentDiv);
         container.appendChild(messageDiv);
     }
@@ -2292,13 +2378,8 @@ function typeWriter(element, text, index) {
     const container = document.getElementById('chatContainer');
     const formattedText = formatMessage(text);
     
-    // Buat temporary div untuk parse HTML
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = formattedText;
-    
-    // Ambil text content untuk typing effect
     const plainText = text;
-    const speed = 5; // Kecepatan typing super cepat (ms per karakter)
+    const speed = 5;
     
     if (index < plainText.length) {
         const currentText = plainText.substring(0, index + 1);
@@ -2310,6 +2391,9 @@ function typeWriter(element, text, index) {
         // Selesai, tampilkan format lengkap
         element.innerHTML = formattedText;
         container.scrollTop = container.scrollHeight;
+        // Baru boleh kirim lagi setelah typing selesai
+        isGenerating = false;
+        updateSendButton();
     }
 }
 
@@ -2426,63 +2510,19 @@ function removeTypingIndicator(id) {
 // Clear chat
 function clearChat() {
     if (confirm('Apakah Anda yakin ingin menghapus semua riwayat chat?')) {
-        chatHistory = [];
+        // Hanya hapus history mode aktif
+        chatHistory.length = 0;
+        
         const container = document.getElementById('chatContainer');
         container.innerHTML = '';
         
-        // Show welcome screen again
         const welcomeScreen = document.createElement('div');
         welcomeScreen.className = 'welcome-screen';
         welcomeScreen.id = 'welcomeScreen';
-        welcomeScreen.innerHTML = `
-            <div class="welcome-hero">
-                <div class="hero-icon">
-                    <i class="fa-solid fa-robot"></i>
-                </div>
-                <h1 class="hero-title">Selamat Datang di ZainAI</h1>
-                <p class="hero-subtitle">Asisten AI Cerdas Bertenaga VPS - Siap Membantu Anda</p>
-            </div>
-            <div class="features-section">
-                <h3 class="section-title">Apa yang bisa saya bantu?</h3>
-                <div class="feature-grid">
-                    <div class="feature-card" onclick="sendPrompt('Jelaskan tentang artificial intelligence dan machine learning')">
-                        <i class="fa-solid fa-lightbulb feature-icon"></i>
-                        <h4 class="feature-title">Pengetahuan</h4>
-                        <p class="feature-desc">Pertanyaan umum & edukasi</p>
-                    </div>
-                    <div class="feature-card" onclick="sendPrompt('Buatkan contoh kode Python untuk web scraping')">
-                        <i class="fa-solid fa-code feature-icon"></i>
-                        <h4 class="feature-title">Pemrograman</h4>
-                        <p class="feature-desc">Coding & debugging</p>
-                    </div>
-                    <div class="feature-card" onclick="sendPrompt('Buatkan cerita pendek tentang petualangan di luar angkasa')">
-                        <i class="fa-solid fa-book feature-icon"></i>
-                        <h4 class="feature-title">Kreativitas</h4>
-                        <p class="feature-desc">Menulis & brainstorming</p>
-                    </div>
-                    <div class="feature-card" onclick="sendPrompt('Analisis tren teknologi AI di tahun 2024')">
-                        <i class="fa-solid fa-chart-line feature-icon"></i>
-                        <h4 class="feature-title">Analisis</h4>
-                        <p class="feature-desc">Data & insights</p>
-                    </div>
-                    <div class="feature-card" onclick="sendPrompt('Berikan tips produktivitas untuk bekerja dari rumah')">
-                        <i class="fa-solid fa-briefcase feature-icon"></i>
-                        <h4 class="feature-title">Produktivitas</h4>
-                        <p class="feature-desc">Tips & strategi</p>
-                    </div>
-                    <div class="feature-card" onclick="sendPrompt('Jelaskan konsep blockchain dengan bahasa sederhana')">
-                        <i class="fa-solid fa-graduation-cap feature-icon"></i>
-                        <h4 class="feature-title">Pembelajaran</h4>
-                        <p class="feature-desc">Tutorial & panduan</p>
-                    </div>
-                </div>
-            </div>
-        `;
+        welcomeScreen.innerHTML = getWelcomeScreenHTML();
         container.appendChild(welcomeScreen);
         
-        // Update welcome screen sesuai mode aktif
         updateWelcomeScreenForWormMode(responseStyle === 'angry');
-        
         showNotification('Chat berhasil dihapus', 'success');
     }
 }
